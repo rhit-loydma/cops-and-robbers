@@ -1,2 +1,6 @@
 import networkx as nx
-graph = nx.Graph()
+from networkx import Graph
+from input import *
+
+graph: Graph = nx.Graph()
+commandLoop(graph)
