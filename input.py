@@ -15,7 +15,7 @@ def addNextNode(graph: Graph):
 
 def commandLoop(graph: Graph):
     while True:
-        print("q - quit, n - add node, e - add edge")
+        print("q - quit, n - add node, e - add edge, r - remove edge")
         command = input()
         if command == 'q':
             break
