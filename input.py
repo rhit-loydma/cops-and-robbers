@@ -2,16 +2,22 @@ import networkx as nx
 from networkx.classes.graph import Graph
 
 
-def addEdge(graph: Graph, node: int, node2: int):
+def addEdge(graph: Graph, node: int, node2: int) -> bool:
+    if graph.has_edge(node, node2) == True:
+        return False
     graph.add_edge(node, node2)
-    graph.add_edge(node2, node)
+    return True
 
-def removeEdge(graph: Graph, node: int, node2: int):
+def removeEdge(graph: Graph, node: int, node2: int) -> bool:
+    if graph.has_edge(node, node2) == False:
+        return False
     graph.remove_edge(node, node2)
-    graph.remove_edge(node2, node)
+    return True
 
-def addNextNode(graph: Graph):
-    graph.add_node(len(graph.nodes()) + 1)
+def addNextNode(graph: Graph) -> int:
+    nodeIndex: int = len(graph.nodes())
+    graph.add_node(nodeIndex)
+    return nodeIndex
 
 def commandLoop(graph: Graph):
     while True:
@@ -20,16 +26,25 @@ def commandLoop(graph: Graph):
         if command == 'q':
             break
         if command == 'n':
-            addNextNode(graph)
+            index: int = addNextNode(graph)
+            print("Added node index " + str(index))
         if command == 'e':
             print("Input index of first node")
             node = int(input())
             print("Input index of second node")
             node2 = int(input())
-            addEdge(graph, node, node2)
+            success: bool = addEdge(graph, node, node2)
+            if success: 
+                print("Added edge from " + str(node) + " to " + str(node2))
+            else:
+                print("Edge from " + str(node) + " to " + str(node2) + " already exists")
         if command == 'r':
             print("Input index of first node")
             node = int(input())
             print("Input index of second node")
             node2 = int(input())
-            removeEdge(graph, node, node2)
+            success: bool = removeEdge(graph, node, node2)
+            if success: 
+                print("Removed edge from " + str(node) + " to " + str(node2))
+            else:
+                print("Edge from " + str(node) + " to " + str(node2) + " doesn't exist")
