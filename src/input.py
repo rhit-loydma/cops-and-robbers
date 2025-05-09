@@ -1,8 +1,7 @@
 import networkx as nx
 from networkx.classes.graph import Graph
-
-from src.example_viz import color_graph, draw_graph
-
+from viz import draw_graph
+from algorithm import set_attributes
 
 def addEdge(graph: Graph, node: int, node2: int) -> bool:
     if graph.has_edge(node, node2) == True:
@@ -52,5 +51,5 @@ def commandLoop(graph: Graph):
                 print("Edge from " + str(node) + " to " + str(node2) + " doesn't exist")
         if command == "d":
             print("Drawing graph. Close window to continue editing the graph.")
-            color_graph(graph)
+            set_attributes(graph)
             draw_graph(graph)
