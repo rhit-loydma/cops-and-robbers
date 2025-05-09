@@ -1,6 +1,8 @@
 import networkx as nx
 from networkx.classes.graph import Graph
 
+from src.example_viz import color_graph, draw_graph
+
 
 def addEdge(graph: Graph, node: int, node2: int) -> bool:
     if graph.has_edge(node, node2) == True:
@@ -21,10 +23,10 @@ def addNextNode(graph: Graph) -> int:
 
 def commandLoop(graph: Graph):
     while True:
-        print("q - quit, n - add node, e - add edge, r - remove edge")
+        print("q - quit, n - add node, e - add edge, r - remove edge, d - draw graph")
         command = input()
         if command == 'q':
-            break
+            exit()
         if command == 'n':
             index: int = addNextNode(graph)
             print("Added node index " + str(index))
@@ -48,3 +50,7 @@ def commandLoop(graph: Graph):
                 print("Removed edge from " + str(node) + " to " + str(node2))
             else:
                 print("Edge from " + str(node) + " to " + str(node2) + " doesn't exist")
+        if command == "d":
+            print("Drawing graph. Close window to continue editing the graph.")
+            color_graph(graph)
+            draw_graph(graph)

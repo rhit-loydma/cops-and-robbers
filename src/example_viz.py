@@ -11,7 +11,7 @@ def draw_graph(G):
     fig, ax = plt.subplots()
     nx.draw_networkx_nodes(G, pos, node_color=node_colors)
     nx.draw_networkx_edges(G, pos, width=2.0, edge_color=edge_colors)
-    plt.show()
+    plt.show(block = False)
 
 def color_graph(G):
     # find how many triangles each edge particpate in
@@ -48,7 +48,7 @@ def get_edge_counts(G):
         elif len(clique) > 3:
             break
     return G
-
-G = nx.gnm_random_graph(10, 20, seed=0)
-G = color_graph(G)
-draw_graph(G)
+if __name__ == "__main__":
+    G = nx.gnm_random_graph(10, 20, seed=0)
+    G = color_graph(G)
+    draw_graph(G)
