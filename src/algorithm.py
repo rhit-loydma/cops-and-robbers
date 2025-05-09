@@ -2,6 +2,22 @@ import networkx as nx
 import itertools
 from viz import draw_graph
 
+def iterate(G):
+    # get attributes
+    G = set_attributes(G)
+
+    # find node to iterate
+    for (u,v,a) in G.edges(data=True):
+        if u["degree_minus_one"] == a["triangle_count"]:
+            G.remove_node(u)
+            return G, True
+        if u["degree_minus_one"] == a["triangle_count"]:
+            G.remove_node(u)
+            return G, True
+        
+    # no node found, not cop-win
+    return G, False   
+
 def get_edge_counts(G):
     # initialize all edge counts
     nx.set_edge_attributes(G, 0, "triangle_count")

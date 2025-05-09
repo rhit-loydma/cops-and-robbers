@@ -7,10 +7,14 @@ def draw_graph(G):
     G = color_graph(G)
     edge_colors = [data["color"] for u, v, data in G.edges(data=True)]
     node_colors = [data["color"] for v, data in G.nodes(data=True)]
+    node_labels = {v: data["degree_minus_one"] + 1 for v, data in G.nodes(data=True)}
+    edge_labels = {(u,v): data["triangle_count"] for u, v, data in G.edges(data=True)}
 
     fig, ax = plt.subplots()
     nx.draw_networkx_nodes(G, pos, node_color=node_colors)
     nx.draw_networkx_edges(G, pos, width=2.0, edge_color=edge_colors)
+    nx.draw_networkx_labels(G, pos, node_labels)
+    nx.draw_networkx_edge_labels(G, pos, edge_labels, font_size=10)
     plt.show()
 
 def color_graph(G):
