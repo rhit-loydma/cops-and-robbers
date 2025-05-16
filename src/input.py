@@ -2,7 +2,7 @@ import networkx as nx
 import pickle
 from networkx.classes.graph import Graph
 from viz import draw_graph
-from algorithm import set_attributes
+from algorithm import set_attributes, is_cop_win
 
 def addEdge(graph: Graph, node: int, node2: int) -> bool:
     if graph.has_edge(node, node2) == True:
@@ -23,11 +23,14 @@ def addNextNode(graph: Graph) -> int:
 
 def commandLoop(graph: Graph):
     while True:
-        print("q - quit, n - add node, e NODE1 NODE2 - add edge, r NODE1 NODE2 - remove edge, d - draw graph, s NAME - save graph, l NAME - load graph")
+        print("q - quit, c - check if cop-win, n - add node, e [NODE1] [NODE2] - add edge, r [NODE1] [NODE2] - remove edge, d - draw graph, s [NAME] - save graph, l [NAME] - load graph")
         commands = input().split(" ")
         command = commands[0]
         if command == 'q' and len(commands) == 1:
             exit()
+        if command == 'c' and len(commands) == 1:
+            word = "" if is_cop_win(graph) else "NOT "
+            print(f"Graph IS {word}cop-win. Visualization of algorithm is saved at greedy_algorithm.gif")
         if command == 'n' and len(commands) == 1:
             index: int = addNextNode(graph)
             print("Added node index " + str(index))

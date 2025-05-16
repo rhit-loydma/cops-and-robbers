@@ -1,9 +1,19 @@
 import networkx as nx
 import matplotlib.pyplot as plt
 import matplotlib.cm as cm
+import imageio
+import os
 
-def draw_graph(G):
-    pos = nx.spring_layout(G, seed=0)
+def create_gif(filepath, frame_dir, num_frames):
+    images = []
+    for i in range(num_frames):
+        filename = os.path.join(frame_dir, f"{i}.png")
+        images.append(imageio.imread(filename))
+    imageio.mimsave(filepath, images, fps=1)
+
+def draw_graph(G, pos=None, filepath=None):
+    if pos == None:
+        pos = nx.spring_layout(G, seed=0)
     G = color_graph(G)
     edge_colors = [data["color"] for u, v, data in G.edges(data=True)]
     node_colors = [data["color"] for v, data in G.nodes(data=True)]
@@ -15,7 +25,10 @@ def draw_graph(G):
     nx.draw_networkx_edges(G, pos, width=2.0, edge_color=edge_colors)
     nx.draw_networkx_labels(G, pos, node_labels)
     nx.draw_networkx_edge_labels(G, pos, edge_labels, font_size=10)
-    plt.show()
+    if filepath == None:
+        plt.show()
+    else:
+        plt.savefig(filepath)
 
 def color_graph(G):
     triangle_counts = nx.get_edge_attributes(G, "triangle_count").values()
@@ -27,6 +40,7 @@ def color_graph(G):
         min_value = min(min(triangle_counts), min(degrees_minus_one))
         divisor = max(max_value - min_value, 1)
     except ValueError:
+        min_value = 0
         divisor = 1
 
     edge_attrs = {e: {"color": cm.rainbow((G[e[0]][e[1]]["triangle_count"] - min_value) / divisor)} for e in G.edges()}

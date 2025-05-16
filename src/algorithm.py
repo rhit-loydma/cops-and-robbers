@@ -1,18 +1,36 @@
 import networkx as nx
 import itertools
-from viz import draw_graph
+from os import makedirs
+from viz import draw_graph, create_gif
+
+def is_cop_win(G, filepath="greedy_algorithm.gif"):
+    makedirs("temp", exist_ok=True)
+    pos = nx.spring_layout(G, seed=0)
+    i = 0
+    b = True
+    is_cop_win = False
+    while b:
+        draw_graph(G, pos, f"temp/{i}.png")
+        i += 1
+        G, b = iterate(G)
+        if len(G.nodes()) == 1:
+            is_cop_win = True
+            break
+    draw_graph(G, pos, f"temp/{i}.png")
+    create_gif(filepath, "temp", i+1)
+    return is_cop_win
 
 def iterate(G):
     # get attributes
     G = set_attributes(G)
 
-    # find node to iterate
+    # find node to remove
     for (u,v,a) in G.edges(data=True):
-        if u["degree_minus_one"] == a["triangle_count"]:
+        if G.nodes[u]["degree_minus_one"] == a["triangle_count"]:
             G.remove_node(u)
             return G, True
-        if u["degree_minus_one"] == a["triangle_count"]:
-            G.remove_node(u)
+        if G.nodes[v]["degree_minus_one"] == a["triangle_count"]:
+            G.remove_node(v)
             return G, True
         
     # no node found, not cop-win
@@ -43,7 +61,3 @@ def set_attributes(G):
     G = get_edge_counts(G)
     G = get_degree_counts(G)
     return G
-
-# G = nx.gnm_random_graph(10, 20, seed=0)
-# G = set_attributes(G)
-# draw_graph(G)
