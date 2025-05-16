@@ -22,12 +22,18 @@ def addNextNode(graph: Graph) -> int:
     return nodeIndex
 
 def commandLoop(graph: Graph):
+    menu = "MENU:\n\tq - quit; h - print menu; c - check if cop-win\n\t" \
+        "n - add node; e [NODE1] [NODE2] - add edge; r [NODE1] [NODE2] - remove edge\n\t" \
+        "d - draw graph; s [NAME] - save graph; l [NAME] - load graph\n\t" \
+        "co [n] - complete graph; ra [n] [m] [seed] - random graph; de [sequence] [seed] - degree sequence; ga [i] - graph atlas"
+    print(menu)
     while True:
-        print("q - quit, c - check if cop-win, n - add node, e [NODE1] [NODE2] - add edge, r [NODE1] [NODE2] - remove edge, d - draw graph, s [NAME] - save graph, l [NAME] - load graph")
         commands = input().split(" ")
         command = commands[0]
         if command == 'q' and len(commands) == 1:
             exit()
+        if command == 'h' and len(commands) == 1:
+            print(menu)
         if command == 'c' and len(commands) == 1:
             word = "" if is_cop_win(graph) else "NOT "
             print(f"Graph IS {word}cop-win. Visualization of algorithm is saved at greedy_algorithm.gif")
@@ -61,7 +67,22 @@ def commandLoop(graph: Graph):
             file = commands[1]
             with open(file, "wb") as f:
                 pickle.dump(graph, f)
+            print("Saved graph")
         if command == "l" and len(commands) == 2:
             file = commands[1]
             with open(file, 'rb') as file:
                 graph = pickle.load(file)
+            print("Loaded graph")
+        if command == 'co' and len(commands) == 2:
+            graph = nx.complete_graph(int(commands[1]))
+            print(f"Created {graph}")
+        if command == 'ra' and len(commands) == 4:
+            graph = nx.gnm_random_graph(int(commands[1]), int(commands[2]), seed=int(commands[3]))
+            print(f"Created {graph}")
+        if command == 'de' and len(commands) == 3:
+            sequence = [int(digit) for digit in commands[1]]
+            graph = nx.random_degree_sequence_graph(sequence, seed=int(commands[2]), tries=100)
+            print(f"Created {graph}")
+        if command == 'ga' and len(commands) == 2:
+            graph = nx.graph_atlas(int(commands[1]))
+            print(f"Created {graph}")

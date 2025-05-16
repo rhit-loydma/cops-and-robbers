@@ -29,6 +29,7 @@ def draw_graph(G, pos=None, filepath=None):
         plt.show()
     else:
         plt.savefig(filepath)
+        plt.close(fig)
 
 def color_graph(G):
     triangle_counts = nx.get_edge_attributes(G, "triangle_count").values()
