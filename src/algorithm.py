@@ -9,6 +9,7 @@ def is_cop_win(G, filepath="greedy_algorithm.gif"):
     i = 0
     b = True
     is_cop_win = False
+    G = set_attributes(G)
     while b:
         draw_graph(G, pos, f"temp/{i}.png")
         i += 1
