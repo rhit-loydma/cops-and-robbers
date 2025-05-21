@@ -9,7 +9,7 @@ def create_gif(filepath, frame_dir, num_frames):
     for i in range(num_frames):
         filename = os.path.join(frame_dir, f"{i}.png")
         images.append(imageio.imread(filename))
-    imageio.mimsave(filepath, images, fps=1)
+    imageio.mimsave(filepath, images, fps=0.75)
 
 def draw_graph(G, pos=None, filepath=None):
     if pos == None:
