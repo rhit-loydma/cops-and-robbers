@@ -42,7 +42,7 @@ q
 ```
 
 ### Example Outputs
-Cop-win Graph 
+Cop-win Graph  
 ![cop_win_gif](gifs/cop_win.gif)
 
 Robber-win Graph  
