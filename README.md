@@ -42,8 +42,8 @@ q
 ```
 
 ### Example Outputs
-Cop-win Graph  
-<img src="gifs/cop_win.gif" alt="cop_win_graph" width="500px" loop=infinite>
+Cop-win Graph 
+![cop_win_gif](gifs/cop_win.gif)
 
 Robber-win Graph  
-<img src="gifs/robber_win.gif" alt="robber_win_graph" width="500px" loop=infinite>
+![robber_win_gif](gifs/robber_win.gif)
